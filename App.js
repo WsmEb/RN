@@ -1,7 +1,6 @@
-import { StatusBar } from "expo-status-bar";
+
 import { useState } from "react";
 import {
-  ActivityIndicatorBase,
   Button,
   Image,
   Modal,
@@ -10,24 +9,41 @@ import {
   ActivityIndicator,
   Text,
   View,
+  StatusBar,
+  Alert
 } from "react-native";
 
 export default function App() {
   const [isVisisble,setVisible] = useState(false);
   const [loading,setLoading] = useState(false);
+  const [bar,setBar] = useState(false);
   const Separator = () => <View style={styles.Separator} />;
   return (
     <View style={styles.container}>
-      <Text style={styles.text} onPress={() => console.log("Text Pressed")}>
+      <Text style={styles.text} onPress={() => alert("Hello There")}>
         Everything is good now ('_')
       </Text>
+      <Button title="Press Alert" onPress={() => Alert.alert("Are you Sure!!","that is dangerous",[
+        {
+          text : "Confirm",
+          onPress: () => setLoading(true)
+        },
+        {
+          text : "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: styles.text
+        }
+      ])}  />
+      <Separator/>
       <Button
         title="Press"
-        onPress={() => setVisible((visible) => !visible)}
+        onPress={() => setVisible((visible) => !visible )}
         color={"midnightblue"}
       />
-      <StatusBar style="auto" />
-      <Pressable onPress={() => console.log("Image Pressed")}>
+      <Pressable >
+      <StatusBar backgroundColor="green" barStyle="light-content" hidden={bar}   />
+      </Pressable>
+      <Pressable onPress={() => setBar((bar) => !bar)}>
         <Image
           style={styles.image}
           source={{
@@ -72,7 +88,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "plum",
+    backgroundColor: "lightgreen",
     alignItems: "center",
     justifyContent: "center",
   },
